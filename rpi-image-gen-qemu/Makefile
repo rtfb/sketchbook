@@ -9,6 +9,7 @@ build-image:
 shell:
 	docker run --rm -it \
 		--privileged \
+		-v $(PWD):/workspace \
 		-v $(SRC):/workspace/rpi-image-gen \
 		-v $(WORK):/workspace/rpi-image-gen/work \
 		-v $(CACHE):/var/cache/apt \
@@ -19,12 +20,13 @@ build:
 	docker run --rm -it \
 		--privileged \
 		--platform linux/arm64 \
+		-v $(PWD):/workspace \
 		-v $(SRC):/workspace/rpi-image-gen \
 		-v $(WORK):/workspace/rpi-image-gen/work \
 		-v $(CACHE):/var/cache/apt \
-		-w /workspace/rpi-image-gen \
+		-w /workspace \
 		$(IMAGE) \
-		./rpi-image-gen build -c config/bookworm-minbase.yaml
+		./rpi-image-gen/rpi-image-gen build -i -c test-image-config/config.yaml
 
 
 # build:
